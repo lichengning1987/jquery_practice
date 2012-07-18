@@ -2,6 +2,11 @@
 <html>
 <head>
     <title></title>
+    <style type="text/css">
+        body{font-size:12px;}
+        .clsInit{width:435px;height:35px; line-height: 35px; padding-left:10px;}
+        .clsTip{padding-top:5px; background-color: #eee; display:none;}
+    </style>
     <script src="jquery-1.7.2-min.js"></script>
     <script type="text/javascript">
         $(function(){
@@ -17,7 +22,6 @@
                         品牌3_2:"型号3_2_1,型号3_2_2"}
             }
             $.each(arrData,function(pF){ //遍历数据增加厂商项
-                console.log(pF);
                 $("#selF").append("<option>"+ pF+"</option>");
             })
             $("#selF").change(function(){
@@ -51,7 +55,16 @@
                 })
 
             })
-
+            $("#button1").click(function(){
+                //注册按钮单击事件
+                var strValue= "您选择的厂商:";
+                strValue +=$("#selF option:selected").text();
+                strValue += "　您选择的品牌:";
+                strValue +=$("#selT option:selected").text();
+                strValue += "　您选择的型号:";
+                strValue +=$("#selC option:selected").text();
+                $("#divTip").show().addClass("clsTip").html(strValue);
+            })
 
         })
     </script>
@@ -63,5 +76,6 @@
     型号: <select name="" id="selC"><option value="">请选择</option></select>
     <input id="button1" type="button" value="查询" class="btn">
 </div>
+<div class="clsInit" id="divTip"></div>
 </body>
 </html>

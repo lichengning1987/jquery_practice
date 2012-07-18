@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="jquery-1.7.2-min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            function objInit(obj){//下拉列表框初始化
+                return $(obj).html("<option>请选择</option>")
+            }
+            var arrData = {//保存相关数据
+                厂商1:{品牌1_1:"型号1_1_1,型号1_1_2",
+                       品牌1_2:"型号1_2_1,型号1_2_2"},
+                厂商2:{品牌2_1:"型号2_1_1,型号2_1_2",
+                        品牌2_2:"型号2_2_1,型号2_2_2"},
+                厂商3:{品牌3_1:"型号3_1_1,型号3_1_2",
+                        品牌3_2:"型号3_2_1,型号3_2_2"}
+            }
+            $.each(arrData,function(pF){ //遍历数据增加厂商项
+                console.log(pF);
+                $("#selF").append("<option>"+ pF+"</option>");
+            })
+            $("#selF").change(function(){
+                objInit("#selT");
+                objInit("#selC");
+                $.each(arrData,function(pF,pS){
+                    //如果厂商选中项与数据匹配
+                    if($("#selF option:selected").text() == pF)
+                    {
+                        $.each(pS,function(pT,pC){
+                            //console.log(pT);
+                            $("#selT").append("<option>"+pT +"</option>")
+                        })
+                        //品牌列表框选项改变事件
+                        $("#selT").change(function(){
+                            objInit("#selC");
+                            $.each(pS,function(pT,pC){
+                                //如果品牌选中项与数据匹配
+                                if($("#selT option:selected").text() == pT)
+                                {
+                                    $.each(pC.split(","),function(){
+                                        $("#selC").append("<option>"+this+"</option>")
+                                    })
+                                }
+                            })
+                        })
+
+                    }
+
+
+                })
+
+            })
+
+
+        })
+    </script>
+</head>
+<body>
+<div class="clsInit">
+    厂商: <select name="" id="selF"><option value="">请选择</option></select>
+    品牌: <select name="" id="selT"><option value="">请选择</option></select>
+    型号: <select name="" id="selC"><option value="">请选择</option></select>
+    <input id="button1" type="button" value="查询" class="btn">
+</div>
+</body>
+</html>
